@@ -1,4 +1,6 @@
-﻿using Domain.Interfaces;
+﻿using Data_Access.DTOs;
+using Domain.DTOs;
+using Domain.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,17 +19,71 @@ namespace Access_Management.Controllers
 
         [HttpPost]
         [Route("Add-Roles")]
-        public  async Task<IActionResult> AddRoles()
+        public async Task<IActionResult> AddRoles()
         {
             try
             {
                 var response = await authService.SeedRoles();
-                return Ok(response);
+                if(response.IsSuccessful)
+                {
+                    return Ok(response);
+                }
+                else
+                {
+                    return BadRequest(response);
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message} /n {ex.Source}/n{ex.InnerException}");
+            }
+        }
+
+        [HttpPost]
+        [Route("Register-new-User")]
+        public async Task<IActionResult> Register([FromBody] RegisterDTO registerDTO)
+        {
+            try
+            {
+                var register_Response = await authService.Register(registerDTO);
+                if(register_Response.IsSuccessful)
+                {
+                    return Ok(register_Response);
+                }
+                else
+                {
+                    return BadRequest(register_Response);
+                }
             }
             catch(Exception ex)
             {
-                return BadRequest(ex);
+                return BadRequest($"{ex.Message} /n {ex.Source}/n{ex.InnerException}");
             }
         }
+
+        [HttpPost]
+        [Route("Login")]
+        public async Task<IActionResult> Login([FromBody] LoginDTO login)
+        {
+            try
+            {
+                var login_Response = await authService.Login(login);
+                if (login_Response != null)
+                {
+                    return Ok(login_Response);
+                }
+                else
+                {
+                    return BadRequest(login_Response);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message} /n {ex.Source}/n{ex.InnerException}");
+            }
+        }
+
+
     }
 }

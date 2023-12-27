@@ -5,15 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.DTOs
+namespace Data_Access.DTOs
 {
-    public class Register
+    public class LoginDTO
     {
-        [Required(ErrorMessage = "Username is Required")]
-        public string UserName { get; set; }
-        [Required(ErrorMessage = "Email is Required")]
-        public string Email { get; set; }
+        public string UsernameOrEmail { get; set; }
         [Required(ErrorMessage = "Password is Required")]
         public string Password { get; set; }
+        
     }
 }
