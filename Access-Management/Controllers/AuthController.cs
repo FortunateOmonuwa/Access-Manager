@@ -84,6 +84,49 @@ namespace Access_Management.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("Give-Admin-Access")]
+        public async Task<IActionResult> GiveAdminAccess([FromBody]UpdatePermission username)
+        {
+            try
+            {
+                var update_response = await authService.GiveAdminAccess(username);
+                if (update_response is not null)
+                {
+                    return Ok(update_response);
+                }
+                else
+                {
+                    return BadRequest(update_response);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message} /n {ex.Source}/n{ex.InnerException}");
+            }
+        }
 
+
+        [HttpPost]
+        [Route("Give-Magnet-Access")]
+        public async Task<IActionResult> GiveMagnetAccess([FromBody]UpdatePermission username)
+        {
+            try
+            {
+                var update_response = await authService.GiveMagnetAccess(username);
+                if (update_response != null)
+                {
+                    return Ok(update_response);
+                }
+                else
+                {
+                    return BadRequest(update_response);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"{ex.Message} /n {ex.Source}/n{ex.InnerException}");
+            }
+        }
     }
 }

@@ -15,5 +15,7 @@ namespace Domain.Interfaces
         Task<ResponseModel<string>> SeedRoles();
         Task<ResponseModel<string>> Register(RegisterDTO registerModel);
         Task<string>Login(LoginDTO login);
+        Task<string> GiveAdminAccess(UpdatePermission username);
+        Task<string> GiveMagnetAccess(UpdatePermission username);
     }
 }

@@ -219,5 +219,51 @@ namespace Data_Access.Repositories
 
            
         }
+
+        public async Task<string> GiveAdminAccess(UpdatePermission username)
+        {
+          
+            try
+            {
+                var user = await userManager.FindByNameAsync(username.UserName);
+                if(user is not null)
+                {
+                    await userManager.AddToRoleAsync(user, UserRoles.ADMIN);
+                    return "Operation successful";
+                }
+                else
+                {
+                    return $"Operation not successful... {username.UserName} does not exist";
+
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"{ex.Message}/n {ex.Source} /n {ex.InnerException}");
+            }
+        }
+
+        public async Task<string> GiveMagnetAccess(UpdatePermission username)
+        {
+           
+            try
+            {
+                var user = await userManager.FindByNameAsync(username.UserName);
+                if (user is not null)
+                {
+                    await userManager.AddToRoleAsync(user, UserRoles.MAGNET);
+                    return "Operation successful";
+                }
+                else
+                {
+                    return $"Operation not successful... {username.UserName} does not exist";
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"{ex.Message}/n {ex.Source} /n {ex.InnerException}");
+            }
+         
+        }
     }
 }
