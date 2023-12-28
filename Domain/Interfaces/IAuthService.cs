@@ -1,7 +1,6 @@
 ﻿using Data_Access.DTOs;
 using Domain.DTOs;
 using Domain.Utilities;
-using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;

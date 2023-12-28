@@ -2,6 +2,7 @@
 using Data_Access.DTOs;
 using Data_Access.Other_Objects;
 using Domain.DTOs;
+using Domain.Entities;
 using Domain.Interfaces;
 using Domain.Utilities;
 using Microsoft.AspNetCore.Identity;
@@ -20,11 +21,11 @@ namespace Data_Access.Repositories
 {
     public class AuthService : IAuthService
     {
-        private readonly UserManager<IdentityUser> userManager;
+        private readonly UserManager<UserEntity> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly IConfiguration configuration;
 
-        public AuthService(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
+        public AuthService(UserManager<UserEntity> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
@@ -56,6 +57,8 @@ namespace Data_Access.Repositories
                         new(ClaimTypes.Name, user.UserName),
                         new(ClaimTypes.NameIdentifier, user.Id),
                         new("JWTID", Guid.NewGuid().ToString()),
+                        new("FirstName", user.FirstName),
+                        new("LastName", user.LastName)
 
                     };
 
@@ -113,8 +116,10 @@ namespace Data_Access.Repositories
                 {
                     response.IsSuccessful = true;
                     response.Message = "Registration succesfull";
-                    IdentityUser newUser = new()
+                    UserEntity newUser = new()
                     {
+                        FirstName = registerModel.FirstName,
+                        LastName = registerModel.LastName,
                         UserName = registerModel.UserName,
                         Email = registerModel.Email,
                         SecurityStamp = Guid.NewGuid().ToString(),

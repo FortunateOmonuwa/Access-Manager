@@ -1,5 +1,6 @@
 using Data_Access.DB_Context;
 using Data_Access.Repositories;
+using Domain.Entities;
 using Domain.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -26,7 +27,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 
 //Add Identity service
 builder.Services
-    .AddIdentity<IdentityUser, IdentityRole>() //Identity takes in a user and a role
+    .AddIdentity<UserEntity, IdentityRole>() //Identity takes in a user and a role
     .AddEntityFrameworkStores<ApplicationDBContext>() //Add entity framework stores
     .AddDefaultTokenProviders(); // add default token providers
 

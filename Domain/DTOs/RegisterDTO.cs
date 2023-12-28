@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Domain.DTOs
 {
     public class RegisterDTO
     {
+        [Required(ErrorMessage = "Firstname is Required")]
+        public string FirstName { get; set; }
+        [Required(ErrorMessage = "Lastname is Required")]
+        public string LastName { get; set; }
         [Required(ErrorMessage = "Username is Required")]
         public string UserName { get; set; }
         [DataType(DataType.EmailAddress)]
